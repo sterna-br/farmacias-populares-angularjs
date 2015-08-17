@@ -5,6 +5,8 @@
 
         var self = this;
 
+        $scope.distance = 10;
+
         // Guarda o zoom atual (inclusive quando mudado pelo OpenLayers).
         var actualZoom = 5;
 
@@ -98,7 +100,7 @@
          * @param coordinates Coordenadas para obter as farmácias próximas.
          */
         function nearest(coords) {
-            FarmaciaService.nearest({latitude: coords.latitude, longitude: coords.longitude, distance: 1},
+            FarmaciaService.nearest({latitude: coords.latitude, longitude: coords.longitude, distance: $scope.distance},
                 function (result) {
                     $scope.center = {lat: coords.latitude, lon: coords.longitude, zoom: actualZoom};
                     setMarkers(result);
