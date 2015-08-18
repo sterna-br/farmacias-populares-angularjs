@@ -5,7 +5,10 @@
 
         var self = this;
 
+        // Distância (raio).
         $scope.distance = 10;
+
+        // Quantidade de farmácias que serão exibidas.
         $scope.quantity = 50;
 
         // Guarda o zoom atual (inclusive quando mudado pelo OpenLayers).
@@ -22,6 +25,19 @@
 
         // Guarda as configurações do Layer que vem do Sterna.
         $scope.sterna = {};
+
+        // Camada que exibe o mapa Cycle map (estilo Terrain).
+        $scope.cycle = {
+            "name": "OpenCycleMap",
+            "active": true,
+            "source": {
+                "type": "OSM",
+                "url": "http://{a-c}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png",
+                "attribution": "All maps &copy; <a href=\"http://www.opencyclemap.org/\">OpenCycleMap</a>"
+            },
+            "visible": true,
+            "opacity": 1
+        };
 
         // Configurações para capturar eventos.
         $scope.defaults = {
@@ -46,6 +62,7 @@
             for (var i = 0; i < data.length; i++) {
                 qs += data[i].name.toLowerCase() + "-color:" + self.colors[i] + ";";
                 data[i].color = "#" + self.colors[i];
+                data[i].colorText = "#ffffff";
             }
 
             self.states = data;
@@ -101,7 +118,12 @@
          * @param coordinates Coordenadas para obter as farmácias próximas.
          */
         function nearest(coords) {
-            FarmaciaService.nearest({latitude: coords.latitude, longitude: coords.longitude, distance: $scope.distance, quantity: $scope.quantity},
+            FarmaciaService.nearest({
+                    latitude: coords.latitude,
+                    longitude: coords.longitude,
+                    distance: $scope.distance,
+                    quantity: $scope.quantity
+                },
                 function (result) {
                     $scope.center = {lat: coords.latitude, lon: coords.longitude, zoom: actualZoom};
                     setMarkers(result);
@@ -113,14 +135,18 @@
             actualZoom = zoom;
         });
 
+        $scope.clusters = {};
+
         /**
          * Colocar os marcadores das farmácias no mapa.
          *
          * @param result Lista de farmácias.
          */
         function setMarkers(result) {
+            var features = new Array();
             $scope.markers = [];
             for (var i = 0; i < result.length; i++) {
+                features.push(new ol.Feature(new ol.geom.Point([result[i].coordinates[0], result[i].coordinates[1]])));
                 $scope.markers.push(
                     {
                         lat: result[i].coordinates[1],
