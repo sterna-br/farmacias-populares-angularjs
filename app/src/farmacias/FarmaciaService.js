@@ -3,11 +3,11 @@
 
     angular.module('farmacia').factory('FarmaciaService', ['$resource',
         function ($resource) {
-            return $resource('http://localhost:5000/farmacias?latitude=:latitude&longitude=:longitude&distance=:distance&state=:state', {}, {
+            return $resource('http://localhost:5000/farmacias?latitude=:latitude&longitude=:longitude&distance=:distance&state=:state&quantity=:quantity', {}, {
                 nearest: {
                     method: "GET",
                     isArray: true,
-                    params: {latitude: "@latitude", longitude: "@longitude", distance: "@distance"}
+                    params: {latitude: "@latitude", longitude: "@longitude", distance: "@distance", quantity: "@quantity"}
                 },
                 byState: {
                     method: "GET",

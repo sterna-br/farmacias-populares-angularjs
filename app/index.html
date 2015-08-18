@@ -21,17 +21,34 @@
 <md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2" md-component-id="left">
 
     <md-toolbar>
-        <h1>Estados</h1>
+        <h1>Opções</h1>
     </md-toolbar>
 
     <md-list>
+        <md-list-item layout-align="center center">
+            <img src="assets/images/sterna-logo.png">
+        </md-list-item>
         <md-list-item>
-            <span class="md-body-1">Raio &nbsp;&nbsp;</span>
+            Informe o tamanho do raio em quilômetros.
+        </md-list-item>
+        <md-list-item>
             <div layout>
-                <md-slider flex min="0" max="25" ng-model="distance" aria-label="red" id="red-slider" class>
+                <md-slider flex min="1" max="25" ng-model="distance" aria-label="red" id="red-slider" class>
                 </md-slider>&nbsp;&nbsp;&nbsp;
                 <div flex="20" layout layout-align="center center">
-                    <input type="number" ng-model="distance" aria-label="red" aria-controls="red-slider">
+                    <input type="number" ng-model="distance" aria-label="red" aria-controls="red-slider" style="border: hidden"> km
+                </div>
+            </div>
+        </md-list-item>
+        <md-list-item>
+            Informe a quantidade máxima de farmácias a serem exibidas.
+        </md-list-item>
+        <md-list-item>
+            <div layout>
+                <md-slider flex min="1" max="50" ng-model="quantity" aria-label="quantity" id="quantity-slider" class>
+                </md-slider>&nbsp;&nbsp;&nbsp;
+                <div flex="20" layout layout-align="center center">
+                    <input type="number" ng-model="quantity" aria-label="quantity" aria-controls="quantity-slider" style="border: hidden"> total
                 </div>
             </div>
         </md-list-item>
